@@ -1,0 +1,31 @@
+---
+title: Introduction
+description: Overview of the OnBeam API.
+---
+
+# Introduction
+
+OnBeam API is a NestJS + Prisma backend that provides:
+
+- Email OTP authentication (JWT)
+- API keys (for server-to-server or project auth)
+- Smart Account (AA) address creation
+- Linked EOA wallets
+- Aggregated balances
+- Swaps and transfers (quote → OTP → prepare → execute)
+- Privacy endpoints (Railgun integration, currently mocked in this repo)
+- Global Accounts and bulk payouts
+
+## Base URL
+
+This depends on where you deploy the API.
+
+Local development default:
+
+- `http://localhost:3004`
+
+## OpenAPI
+
+- Swagger UI: `/api`
+- OpenAPI JSON: `/api-json`
+

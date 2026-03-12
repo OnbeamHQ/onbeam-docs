@@ -1,0 +1,43 @@
+---
+title: Global Accounts
+description: Create, fund, and manage internal ledger accounts.
+---
+
+# Global Accounts
+
+Auth:
+
+- Hybrid (JWT or API key)
+
+## Create
+
+```bash
+curl -X POST http://localhost:3004/global-accounts \
+  -H "x-api-key: $API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"currency":"USD"}'
+```
+
+## List
+
+```bash
+curl http://localhost:3004/global-accounts \
+  -H "x-api-key: $API_KEY"
+```
+
+## Get by id
+
+```bash
+curl http://localhost:3004/global-accounts/$ACCOUNT_ID \
+  -H "x-api-key: $API_KEY"
+```
+
+## Fund (deposit)
+
+```bash
+curl -X POST http://localhost:3004/global-accounts/$ACCOUNT_ID/fund \
+  -H "x-api-key: $API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"amount":"1000","currency":"USD"}'
+```
+

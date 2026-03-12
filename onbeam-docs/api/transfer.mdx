@@ -1,0 +1,26 @@
+---
+title: Transfers
+description: Initiate a token transfer via the swap flow.
+---
+
+# Transfers
+
+This endpoint creates a transfer quote and returns a `quoteId` that is executed using the swap endpoints:
+
+- `POST /swap/request-otp`
+- `POST /swap/prepare`
+- `POST /swap/execute`
+
+Auth:
+
+- JWT only
+
+## Create transfer
+
+```bash
+curl -X POST http://localhost:3004/transfers \
+  -H "Authorization: Bearer $JWT" \
+  -H 'Content-Type: application/json' \
+  -d '{"chainId":137,"token":"0xtoken...","amount":"1000000","toAddress":"0xto...","fromAddress":"0xfrom..."}'
+```
+

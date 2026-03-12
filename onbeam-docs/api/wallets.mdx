@@ -1,0 +1,51 @@
+---
+title: Wallets
+description: Create Smart Accounts and link EOAs.
+---
+
+# Wallets
+
+## Create Smart Account
+
+```bash
+curl -X POST http://localhost:3004/wallet/smart-account \
+  -H "x-api-key: $API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"ownerAddress":"0x1234567890abcdef1234567890abcdef12345678","chainId":80002}'
+```
+
+Auth:
+
+- Hybrid (JWT or API key)
+
+## Link EOA wallet (2-step)
+
+Auth:
+
+- JWT only
+
+Init (nonce):
+
+```bash
+curl -X POST http://localhost:3004/wallets/link/init \
+  -H "Authorization: Bearer $JWT" \
+  -H 'Content-Type: application/json' \
+  -d '{"address":"0x1234567890abcdef1234567890abcdef12345678"}'
+```
+
+Verify (signature):
+
+```bash
+curl -X POST http://localhost:3004/wallets/link/verify \
+  -H "Authorization: Bearer $JWT" \
+  -H 'Content-Type: application/json' \
+  -d '{"address":"0x1234567890abcdef1234567890abcdef12345678","signature":"0x..."}'
+```
+
+List linked wallets:
+
+```bash
+curl http://localhost:3004/wallets/link \
+  -H "Authorization: Bearer $JWT"
+```
+

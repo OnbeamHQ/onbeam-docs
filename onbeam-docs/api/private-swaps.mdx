@@ -1,0 +1,29 @@
+---
+title: Private Swaps
+description: Private swap quote and prepare flow.
+---
+
+# Private Swaps
+
+Auth:
+
+- Hybrid (JWT or API key)
+
+## Quote
+
+```bash
+curl -X POST http://localhost:3004/privacy/swap/quote \
+  -H "x-api-key: $API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"chainId":137,"fromToken":"0x...","toToken":"0x...","amount":"1000000"}'
+```
+
+## Prepare
+
+```bash
+curl -X POST http://localhost:3004/privacy/swap/prepare \
+  -H "x-api-key: $API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"quoteId":"...","railgunWalletId":"..."}'
+```
+

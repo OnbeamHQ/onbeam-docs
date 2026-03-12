@@ -1,0 +1,106 @@
+---
+title: API Reference
+description: Every endpoint (method, path, auth) with curl examples.
+---
+
+# API Reference
+
+## Conventions
+
+- Base URL (local): `http://localhost:3004`
+- JWT header: `Authorization: Bearer <JWT>`
+- API key header: `x-api-key: <API_KEY>`
+- Hybrid auth: either JWT or API key
+
+## Health
+
+| Method | Path | Auth |
+| --- | --- | --- |
+| GET | `/` | None |
+| GET | `/api` | None |
+| GET | `/api-json` | None |
+
+## Auth
+
+| Method | Path | Auth |
+| --- | --- | --- |
+| POST | `/auth/request-code` | None |
+| POST | `/auth/verify-code` | None |
+
+## API Keys
+
+| Method | Path | Auth |
+| --- | --- | --- |
+| POST | `/auth/api-keys` | JWT |
+| GET | `/auth/api-keys` | JWT |
+| DELETE | `/auth/api-keys/:id` | JWT |
+
+## Wallets
+
+| Method | Path | Auth |
+| --- | --- | --- |
+| POST | `/wallet/smart-account` | Hybrid |
+| POST | `/wallets/link/init` | JWT |
+| POST | `/wallets/link/verify` | JWT |
+| GET | `/wallets/link` | JWT |
+
+## Balances
+
+| Method | Path | Auth |
+| --- | --- | --- |
+| GET | `/balances` | JWT |
+
+## Global Accounts
+
+| Method | Path | Auth |
+| --- | --- | --- |
+| POST | `/global-accounts` | Hybrid |
+| GET | `/global-accounts` | Hybrid |
+| GET | `/global-accounts/:id` | Hybrid |
+| POST | `/global-accounts/:id/fund` | Hybrid |
+
+## Payouts
+
+| Method | Path | Auth |
+| --- | --- | --- |
+| POST | `/payouts/bulk/wallets` | Hybrid |
+| POST | `/payouts/bulk/global-accounts` | Hybrid |
+
+## Swaps
+
+| Method | Path | Auth |
+| --- | --- | --- |
+| POST | `/swap/quote` | Hybrid |
+| POST | `/swap/request-otp` | Hybrid |
+| POST | `/swap/prepare` | Hybrid |
+| POST | `/swap/execute` | Hybrid |
+
+## Transfers
+
+| Method | Path | Auth |
+| --- | --- | --- |
+| POST | `/transfers` | JWT |
+
+## Fees
+
+| Method | Path | Auth |
+| --- | --- | --- |
+| GET | `/fees/quote` | None |
+
+## Webhooks
+
+| Method | Path | Auth |
+| --- | --- | --- |
+| POST | `/webhooks/lifi` | `x-signature` |
+| POST | `/webhooks/bundler` | `x-signature` |
+
+## Privacy
+
+| Method | Path | Auth |
+| --- | --- | --- |
+| POST | `/privacy/wallet/init` | Hybrid |
+| GET | `/privacy/balances` | Hybrid |
+| POST | `/privacy/swap/quote` | Hybrid |
+| POST | `/privacy/swap/prepare` | Hybrid |
+| POST | `/privacy/transfer` | Hybrid |
+

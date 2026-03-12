@@ -1,0 +1,18 @@
+---
+title: Webhooks
+description: Webhook receivers for LI.FI and Bundler updates.
+---
+
+# Webhooks
+
+Endpoints:
+
+- `POST /webhooks/lifi`
+- `POST /webhooks/bundler`
+
+Signature header:
+
+- `x-signature: <string>`
+
+If `WEBHOOK_SECRET` is set on the server, the backend validates that `x-signature` equals `WEBHOOK_SECRET`.
+

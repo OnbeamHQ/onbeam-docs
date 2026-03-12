@@ -1,0 +1,46 @@
+---
+title: Authentication
+description: Email OTP login (JWT) and hybrid auth behavior.
+---
+
+# Authentication
+
+## Email OTP → JWT
+
+Request a code:
+
+```bash
+curl -X POST http://localhost:3004/auth/request-code \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"you@example.com"}'
+```
+
+Verify a code:
+
+```bash
+curl -X POST http://localhost:3004/auth/verify-code \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"you@example.com","code":"123456"}'
+```
+
+Response:
+
+```json
+{ "access_token": "..." }
+```
+
+## Hybrid auth
+
+Some routes accept either:
+
+- `Authorization: Bearer <JWT>`
+- `x-api-key: <API_KEY>`
+
+JWT-only routes:
+
+- `POST /wallets/link/init`
+- `POST /wallets/link/verify`
+- `GET /wallets/link`
+- `GET /balances`
+- `POST /transfers`
+

@@ -1,0 +1,15 @@
+---
+title: Private Swap and Transfer
+description: End-to-end private flows using the privacy endpoints.
+---
+
+# Private Swap and Transfer
+
+This API provides separate building blocks:
+
+- Private balances: `GET /privacy/balances`
+- Private swap: `POST /privacy/swap/quote` and `POST /privacy/swap/prepare`
+- Private transfer: `POST /privacy/transfer`
+
+Clients can orchestrate these steps depending on the UX (shield/unshield, swap, then transfer).
+

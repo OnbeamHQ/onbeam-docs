@@ -1,0 +1,26 @@
+---
+title: Private Wallet
+description: Register a Railgun wallet (address + view key).
+---
+
+# Private Wallet
+
+Auth:
+
+- Hybrid (JWT or API key)
+
+## Register / update Railgun wallet
+
+```bash
+curl -X POST http://localhost:3004/privacy/wallet/init \
+  -H "x-api-key: $API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"railgunAddress":"0zk...","viewKey":"..."}'
+```
+
+## Get private balances
+
+```bash
+curl http://localhost:3004/privacy/balances \
+  -H "x-api-key: $API_KEY"
+```

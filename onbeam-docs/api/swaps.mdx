@@ -1,0 +1,47 @@
+---
+title: Swaps
+description: Quote → OTP → prepare → execute swap flow.
+---
+
+# Swaps
+
+Auth:
+
+- Hybrid (JWT or API key)
+
+## Quote
+
+```bash
+curl -X POST http://localhost:3004/swap/quote \
+  -H "x-api-key: $API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"from":[{"address":"0xfrom...","chainId":137,"token":"0xtoken...","amount":"1000000"}],"toChainId":137,"toToken":"0xto...","toAddress":"0xtoaddr...","slippageBps":50}'
+```
+
+## Request OTP
+
+```bash
+curl -X POST http://localhost:3004/swap/request-otp \
+  -H "x-api-key: $API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"quoteId":"..."}'
+```
+
+## Prepare
+
+```bash
+curl -X POST http://localhost:3004/swap/prepare \
+  -H "x-api-key: $API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"quoteId":"...","otp":"123456"}'
+```
+
+## Execute
+
+```bash
+curl -X POST http://localhost:3004/swap/execute \
+  -H "x-api-key: $API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"quoteId":"...","permitsSigned":[],"idempotencyKey":"demo-1"}'
+```
+

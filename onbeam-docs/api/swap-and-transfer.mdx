@@ -1,0 +1,16 @@
+---
+title: Swap and Transfer
+description: Recommended client flow combining swaps and transfers.
+---
+
+# Swap and Transfer
+
+Both swaps and transfers share a common execution flow:
+
+1. `POST /swap/quote` (or `POST /transfers` to create a transfer quote)
+2. `POST /swap/request-otp`
+3. `POST /swap/prepare`
+4. `POST /swap/execute`
+
+This design makes OTP confirmation and client-side signing consistent.
+

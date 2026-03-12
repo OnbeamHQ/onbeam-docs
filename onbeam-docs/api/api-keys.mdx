@@ -1,0 +1,34 @@
+---
+title: API Keys
+description: Create, list, and revoke API keys for hybrid-auth endpoints.
+---
+
+# API Keys
+
+Use API keys via:
+
+- `x-api-key: <API_KEY>`
+
+## Create
+
+```bash
+curl -X POST http://localhost:3004/auth/api-keys \
+  -H "Authorization: Bearer $JWT" \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"yaak"}'
+```
+
+## List
+
+```bash
+curl http://localhost:3004/auth/api-keys \
+  -H "Authorization: Bearer $JWT"
+```
+
+## Revoke
+
+```bash
+curl -X DELETE http://localhost:3004/auth/api-keys/$API_KEY_ID \
+  -H "Authorization: Bearer $JWT"
+```
+

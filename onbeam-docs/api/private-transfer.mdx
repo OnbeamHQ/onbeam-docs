@@ -1,0 +1,20 @@
+---
+title: Private Transfer
+description: Prepare a shielded transfer or an unshield to a public address.
+---
+
+# Private Transfer
+
+Auth:
+
+- Hybrid (JWT or API key)
+
+## Prepare transfer
+
+```bash
+curl -X POST http://localhost:3004/privacy/transfer \
+  -H "x-api-key: $API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"chainId":137,"token":"0x...","amount":"1000000","toRailgunAddress":"0zk...","memo":"hello"}'
+```
+

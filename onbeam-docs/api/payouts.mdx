@@ -1,0 +1,29 @@
+---
+title: Payouts
+description: Bulk payouts to wallets or global accounts.
+---
+
+# Payouts
+
+Auth:
+
+- Hybrid (JWT or API key)
+
+## Bulk to wallets
+
+```bash
+curl -X POST http://localhost:3004/payouts/bulk/wallets \
+  -H "x-api-key: $API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"chainId":137,"transfers":[{"address":"0xabc...","amount":"1000000","token":"USDC"}]}'
+```
+
+## Bulk to global accounts
+
+```bash
+curl -X POST http://localhost:3004/payouts/bulk/global-accounts \
+  -H "x-api-key: $API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"sourceAccountId":"SOURCE_ID","transfers":[{"recipientAccountId":"DEST_ID","amount":"10","currency":"USD"}]}'
+```
+

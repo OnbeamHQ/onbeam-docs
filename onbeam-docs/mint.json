@@ -1,0 +1,30 @@
+{
+  "name": "OnBeam API",
+  "navigation": [
+    {
+      "group": "Overview",
+      "pages": ["introduction", "getting-started", "api-reference"]
+    },
+    {
+      "group": "API",
+      "pages": [
+        "api/authentication",
+        "api/api-keys",
+        "api/wallets",
+        "api/balances",
+        "api/global-accounts",
+        "api/payouts",
+        "api/swaps",
+        "api/transfer",
+        "api/swap-and-transfer",
+        "api/fees",
+        "api/private-wallet",
+        "api/private-swaps",
+        "api/private-transfer",
+        "api/private-swap-and-transfer",
+        "api/webhooks"
+      ]
+    }
+  ]
+}
+
