@@ -1,5 +1,12 @@
 {
   "name": "OnBeam API",
+
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#7c3aed",
+    "light": "#ffffff",
+    "dark": "#0b1221"
+  },
   "navigation": [
     {
       "group": "Overview",
