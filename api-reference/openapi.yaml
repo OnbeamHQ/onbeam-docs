@@ -1,0 +1,643 @@
+openapi: 3.1.0
+info:
+  title: Onbeam API
+  version: 1.0.0
+servers:
+  - url: https://api.onbeam.io
+  - url: http://localhost:3004
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+      required: [message]
+    SmartAccountRequest:
+      type: object
+      properties:
+        ownerAddress:
+          type: string
+          examples: ["0x1234567890abcdef1234567890abcdef12345678"]
+        chainId:
+          type: integer
+          examples: [80002]
+      required: [ownerAddress, chainId]
+    SmartAccountResponse:
+      type: object
+      properties:
+        address:
+          type: string
+        chainId:
+          type: integer
+      required: [address, chainId]
+    LinkInitRequest:
+      type: object
+      properties:
+        address:
+          type: string
+          examples: ["0x1234567890abcdef1234567890abcdef12345678"]
+      required: [address]
+    LinkInitResponse:
+      type: object
+      properties:
+        nonce:
+          type: string
+      required: [nonce]
+    LinkVerifyRequest:
+      type: object
+      properties:
+        address:
+          type: string
+          examples: ["0x1234567890abcdef1234567890abcdef12345678"]
+        signature:
+          type: string
+          examples: ["0x..."]
+      required: [address, signature]
+    LinkVerifyResponse:
+      type: object
+      properties:
+        linked:
+          type: boolean
+      required: [linked]
+    LinkedWallet:
+      type: object
+      properties:
+        address:
+          type: string
+        linkedAt:
+          type: string
+      required: [address]
+    QuoteRequest:
+      type: object
+      properties:
+        from:
+          type: array
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+              chainId:
+                type: integer
+              token:
+                type: string
+              amount:
+                type: string
+            required: [address, chainId, token, amount]
+        toChainId:
+          type: integer
+        toToken:
+          type: string
+        toAddress:
+          type: string
+        slippageBps:
+          type: integer
+      required: [from, toChainId, toToken, toAddress]
+    QuoteResponse:
+      type: object
+      properties:
+        quoteId:
+          type: string
+      required: [quoteId]
+    RequestOtpRequest:
+      type: object
+      properties:
+        quoteId:
+          type: string
+      required: [quoteId]
+    RequestOtpResponse:
+      type: object
+      properties:
+        otpSent:
+          type: boolean
+      required: [otpSent]
+    PrepareRequest:
+      type: object
+      properties:
+        quoteId:
+          type: string
+        otp:
+          type: string
+      required: [quoteId, otp]
+    PrepareResponse:
+      type: object
+      properties:
+        prepared:
+          type: boolean
+      required: [prepared]
+    ExecuteRequest:
+      type: object
+      properties:
+        quoteId:
+          type: string
+        permitsSigned:
+          type: array
+          items:
+            type: string
+        idempotencyKey:
+          type: string
+      required: [quoteId]
+    ExecuteResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          examples: ["submitted"]
+        transactionId:
+          type: string
+      required: [status]
+    TransferRequest:
+      type: object
+      properties:
+        fromWalletId:
+          type: string
+        toAddress:
+          type: string
+        fromChainId:
+          type: integer
+        toChainId:
+          type: integer
+        token:
+          type: string
+        amount:
+          type: string
+      required: [fromWalletId, toAddress, fromChainId, toChainId, token, amount]
+    TransferResponse:
+      type: object
+      properties:
+        transferId:
+          type: string
+        status:
+          type: string
+          examples: ["pending"]
+      required: [transferId, status]
+    SwapAndTransferRequest:
+      type: object
+      properties:
+        fromWalletId:
+          type: string
+        fromChainId:
+          type: integer
+        toChainId:
+          type: integer
+        fromToken:
+          type: string
+        toToken:
+          type: string
+        amount:
+          type: string
+        recipient:
+          type: string
+      required: [fromWalletId, fromChainId, toChainId, fromToken, toToken, amount, recipient]
+    SwapAndTransferResponse:
+      type: object
+      properties:
+        operationId:
+          type: string
+        status:
+          type: string
+          examples: ["pending"]
+      required: [operationId, status]
+    UnifiedBalanceResponse:
+      type: object
+      properties:
+        totals:
+          type: array
+          items:
+            type: object
+            properties:
+              token:
+                type: string
+              amount:
+                type: string
+            required: [token, amount]
+      required: [totals]
+    PrivacyTransferRequest:
+      type: object
+      properties:
+        toAddress:
+          type: string
+        chainId:
+          type: integer
+        token:
+          type: string
+        amount:
+          type: string
+      required: [toAddress, chainId, token, amount]
+paths:
+  /wallet/smart-account:
+    post:
+      operationId: createSmartAccount
+      summary: Create Smart Account
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SmartAccountRequest"
+      responses:
+        "200":
+          description: Smart account created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SmartAccountResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /wallets/link/init:
+    post:
+      operationId: linkWalletInit
+      summary: Link wallet (init)
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LinkInitRequest"
+      responses:
+        "200":
+          description: Nonce generated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LinkInitResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /wallets/link/verify:
+    post:
+      operationId: linkWalletVerify
+      summary: Link wallet (verify)
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LinkVerifyRequest"
+      responses:
+        "200":
+          description: Wallet linked
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LinkVerifyResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /wallets/link:
+    get:
+      operationId: listLinkedWallets
+      summary: List linked wallets
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Linked wallets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/LinkedWallet"
+                required: [data]
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /swap/quote:
+    post:
+      operationId: swapQuote
+      summary: Swap quote
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuoteRequest"
+      responses:
+        "200":
+          description: Quote created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuoteResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /swap/request-otp:
+    post:
+      operationId: swapRequestOtp
+      summary: Request OTP
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestOtpRequest"
+      responses:
+        "200":
+          description: OTP requested
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RequestOtpResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /swap/prepare:
+    post:
+      operationId: swapPrepare
+      summary: Prepare swap
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PrepareRequest"
+      responses:
+        "200":
+          description: Swap prepared
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PrepareResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /swap/execute:
+    post:
+      operationId: swapExecute
+      summary: Execute swap
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExecuteRequest"
+      responses:
+        "200":
+          description: Swap submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExecuteResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /transfers:
+    post:
+      operationId: createTransfer
+      summary: Create transfer
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransferRequest"
+      responses:
+        "200":
+          description: Transfer created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransferResponse"
+  /transfers/{transferId}:
+    get:
+      operationId: getTransfer
+      summary: Get transfer
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      parameters:
+        - name: transferId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Transfer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransferResponse"
+  /swap-and-transfer:
+    post:
+      operationId: createSwapAndTransfer
+      summary: Create swap and transfer
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SwapAndTransferRequest"
+      responses:
+        "200":
+          description: Operation created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SwapAndTransferResponse"
+  /swap-and-transfer/{operationId}:
+    get:
+      operationId: getSwapAndTransfer
+      summary: Get swap and transfer
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      parameters:
+        - name: operationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SwapAndTransferResponse"
+  /wallets/{walletId}/balance/unified:
+    get:
+      operationId: getUnifiedWalletBalance
+      summary: Get unified wallet balance
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      parameters:
+        - name: walletId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: currency
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Unified balance
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnifiedBalanceResponse"
+  /balances/unified:
+    get:
+      operationId: getUnifiedProjectBalance
+      summary: Get unified project balance
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      parameters:
+        - name: currency
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Unified balance
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnifiedBalanceResponse"
+  /privacy/balances:
+    get:
+      operationId: getPrivateBalances
+      summary: Private balances
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Private balances
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnifiedBalanceResponse"
+  /privacy/swap/quote:
+    post:
+      operationId: privateSwapQuote
+      summary: Private swap quote
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuoteRequest"
+      responses:
+        "200":
+          description: Quote created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuoteResponse"
+  /privacy/swap/prepare:
+    post:
+      operationId: privateSwapPrepare
+      summary: Private swap prepare
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PrepareRequest"
+      responses:
+        "200":
+          description: Swap prepared
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PrepareResponse"
+  /privacy/transfer:
+    post:
+      operationId: privateTransfer
+      summary: Private transfer
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PrivacyTransferRequest"
+      responses:
+        "200":
+          description: Transfer created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransferResponse"

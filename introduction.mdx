@@ -1,31 +1,44 @@
 ---
 title: Introduction
-description: Overview of the OnBeam API.
+description: Overview of the Onbeam API, capabilities, and core concepts.
 ---
 
 # Introduction
 
-OnBeam API is a NestJS + Prisma backend that provides:
+Welcome to the Onbeam API.
 
-- Email OTP authentication (JWT)
-- API keys (for server-to-server or project auth)
-- Smart Account (AA) address creation
-- Linked EOA wallets
-- Aggregated balances
-- Swaps and transfers (quote → OTP → prepare → execute)
-- Privacy endpoints (Railgun integration, currently mocked in this repo)
-- Global Accounts and bulk payouts
+Onbeam provides a chain abstraction layer that lets you:
+
+- Manage smart wallets for your users
+- Aggregate balances across multiple chains
+- Execute swaps, transfers, and combined operations
+- Use private wallets and private routing for sensitive flows
+- Track multichain transaction status in a single place
 
 ## Base URL
 
-This depends on where you deploy the API.
+All API requests are made to:
 
-Local development default:
+`https://api.onbeam.io`
 
-- `http://localhost:3004`
+Your documentation is served at:
 
-## OpenAPI
+`https://docs.onbeam.io`
 
-- Swagger UI: `/api`
-- OpenAPI JSON: `/api-json`
+From there, your users can explore:
+
+- Overview pages (like this one and Getting Started)
+- Detailed API reference for wallets, swaps, transfers, balances, and more
+
+## Auth and security
+
+The API is designed to be accessed from secure backend environments using an API key or similar credential.
+
+At a high level:
+
+- You obtain an API key from your Onbeam account or dashboard
+- You send that key in an authorization header on every request
+- You never expose your secret key directly in client-side code
+
+See the Getting Started page for concrete examples.
 

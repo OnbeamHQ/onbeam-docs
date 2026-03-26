@@ -1,0 +1,44 @@
+{
+  "name": "Onbeam API",
+  "navigation": [
+    {
+      "group": "Overview",
+      "pages": [
+        "introduction",
+        "getting-started"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/create-smart-account",
+        "api-reference/link-wallet-init",
+        "api-reference/link-wallet-verify",
+        "api-reference/list-linked-wallets",
+        "api-reference/swap-quote",
+        "api-reference/swap-request-otp",
+        "api-reference/swap-prepare",
+        "api-reference/swap-execute",
+        "api-reference/create-transfer",
+        "api-reference/get-transfer",
+        "api-reference/create-swap-and-transfer",
+        "api-reference/get-swap-and-transfer",
+        "api-reference/get-unified-wallet-balance",
+        "api-reference/get-unified-project-balance",
+        "api-reference/get-private-balances",
+        "api-reference/private-swap-quote",
+        "api-reference/private-swap-prepare",
+        "api-reference/private-transfer",
+        "api/wallets",
+        "api/swaps",
+        "api/transfer",
+        "api/swap-and-transfer",
+        "api/unified-balance",
+        "api/private-wallet",
+        "api/private-swaps",
+        "api/private-transfer",
+        "api/private-swap-and-transfer"
+      ]
+    }
+  ]
+}

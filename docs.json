@@ -1,43 +1,61 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "OnBeam API",
+  "theme": "palm",
+  "name": "Onbeam Developers",
   "colors": {
-    "primary": "#7c3aed",
-    "light": "#ffffff",
-    "dark": "#0b1221"
+    "primary": "#0B5FFF"
   },
-  "favicon": "/favicon.svg",
   "navigation": {
-    "groups": [
+    "tabs": [
       {
-        "group": "Overview",
-        "pages": [
-          "introduction",
-          "getting-started",
-          "api-reference"
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": ["introduction", "getting-started"]
+          }
         ]
       },
       {
-        "group": "API",
-        "pages": [
-          "api/authentication",
-          "api/api-keys",
-          "api/wallets",
-          "api/balances",
-          "api/global-accounts",
-          "api/payouts",
-          "api/swaps",
-          "api/transfer",
-          "api/swap-and-transfer",
-          "api/fees",
-          "api/private-wallet",
-          "api/private-swaps",
-          "api/private-transfer",
-          "api/private-swap-and-transfer",
-          "api/webhooks"
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": ["api-reference/introduction", "api-reference/get-api-keys"]
+          },
+          {
+            "group": "Wallets",
+            "openapi": "/api-reference/openapi.yaml",
+            "pages": ["POST /wallet/smart-account", "POST /wallets/link/init", "POST /wallets/link/verify", "GET /wallets/link"]
+          },
+          {
+            "group": "Swaps",
+            "openapi": "/api-reference/openapi.yaml",
+            "pages": ["POST /swap/quote", "POST /swap/request-otp", "POST /swap/prepare", "POST /swap/execute"]
+          },
+          {
+            "group": "Transfers",
+            "openapi": "/api-reference/openapi.yaml",
+            "pages": ["POST /transfers", "GET /transfers/{transferId}"]
+          },
+          {
+            "group": "Swap and Transfer",
+            "openapi": "/api-reference/openapi.yaml",
+            "pages": ["POST /swap-and-transfer", "GET /swap-and-transfer/{operationId}"]
+          },
+          {
+            "group": "Balances",
+            "openapi": "/api-reference/openapi.yaml",
+            "pages": ["GET /wallets/{walletId}/balance/unified", "GET /balances/unified"]
+          },
+          {
+            "group": "Privacy",
+            "openapi": "/api-reference/openapi.yaml",
+            "pages": ["GET /privacy/balances", "POST /privacy/swap/quote", "POST /privacy/swap/prepare", "POST /privacy/transfer"]
+          }
         ]
       }
     ]
   }
 }
+

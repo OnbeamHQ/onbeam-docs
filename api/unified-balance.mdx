@@ -1,13 +1,49 @@
 ---
-title: Unified Balance
-description: Alias for the balances endpoint.
+title: Unified and Aggregated Balance
+description: View aggregated balances across chains and tokens for a wallet or project.
 ---
 
-# Unified Balance
+# <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "0 0 auto" }}><path d="M12 5c4.418 0 8 1.343 8 3s-3.582 3-8 3-8-1.343-8-3 3.582-3 8-3Z" /><path d="M4 8v4c0 1.657 3.582 3 8 3s8-1.343 8-3V8" /><path d="M4 12v4c0 1.657 3.582 3 8 3s8-1.343 8-3v-4" /></svg><span>Unified and Aggregated Balance</span></span>
 
-This maps to:
+Base URL: `https://api.onbeam.io`
 
-- `GET /balances`
+Unified balance endpoints provide a cross-chain view of assets, aggregating tokens and valuations across all supported networks.
 
-See [Balances](./balances).
+## Get wallet unified balance
 
+Method: `GET`  
+Path: `/wallets/{walletId}/balance/unified`
+
+Returns an aggregated balance view for a single wallet.
+
+### Path parameters
+
+- `walletId` (string, required): Wallet identifier or address.
+
+### Query parameters
+
+- `currency` (string, optional): Fiat currency code for pricing, for example `USD`.
+- `includePerChain` (boolean, optional): If `true`, include per-chain breakdowns.
+
+### Response
+
+- `walletId` (string)
+- `totals` (array): Aggregated token balances and valuations.
+- `perChain` (array, optional): Per-chain token balances if requested.
+
+## Get project aggregated balance
+
+Method: `GET`  
+Path: `/balances/unified`
+
+Aggregates balances across all wallets for your project or API key.
+
+### Query parameters
+
+- `currency` (string, optional): Fiat currency for pricing.
+- `groupBy` (string, optional): One of `token`, `wallet`, or `chain`.
+
+### Response
+
+- `totals` (array): Aggregated token balances and valuations.
+- `groups` (array): Optional group breakdowns, depending on `groupBy`.

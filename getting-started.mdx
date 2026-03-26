@@ -1,31 +1,68 @@
 ---
 title: Getting Started
-description: Run the API locally and make your first authenticated request.
+description: Get your API key, make your first request, and explore the Onbeam API.
 ---
 
-# Getting Started
+# Getting Started / Get your API
 
-## Run the API locally
+This guide shows how to:
+
+- Get access to the Onbeam API
+- Configure authentication
+- Make your first request to `https://api.onbeam.io`
+
+## 1. Get your API key
+
+To call the API, you need an API key from your Onbeam account.
+
+Typical flow:
+
+- Sign in to your Onbeam dashboard
+- Go to the developer or API settings section
+- Create a new secret API key
+- Copy it and store it in a secure place (for example an environment variable)
+
+For example, on a backend service you might set:
 
 ```bash
-npm install
-npm run start:dev
+export ONBEAM_API_KEY="your-secret-key"
 ```
 
-Default base URL:
+Never expose your secret API key directly in client-side or mobile apps.
 
-- `http://localhost:3004`
+## 2. Send authenticated requests
 
-## Verify
+All requests go to:
 
-- Swagger UI: `http://localhost:3004/api`
-- OpenAPI JSON: `http://localhost:3004/api-json`
+`https://api.onbeam.io`
 
-## Mintlify local docs (this repo)
-
-Mintlify CLI requires Node 20+.
+With your API key added in the headers. A common pattern is to use a bearer-style authorization header:
 
 ```bash
-npx mintlify dev onbeam-docs
+curl https://api.onbeam.io/wallets \
+  -H "Authorization: Bearer $ONBEAM_API_KEY"
 ```
+
+Your exact header name or scheme can be adjusted to match how you implement authentication on the backend, but the key idea is that:
+
+- Every request includes a valid credential
+- The credential is only stored and sent from trusted servers
+
+## 3. Make your first API call
+
+Once you have an API key, you can test basic connectivity by listing wallets:
+
+```bash
+curl https://api.onbeam.io/wallets \
+  -H "Authorization: Bearer $ONBEAM_API_KEY"
+```
+
+If everything is configured correctly, you should receive a JSON response with either an empty list of wallets or the wallets already associated with your project.
+
+Next steps:
+
+- Use the **Wallets** page in the API Reference to predict and deploy wallets
+- Use **Swaps**, **Transfers**, and **Swap and Transfer** to move value
+- Use **Unified and Aggregated Balance** to get cross-chain balance views
+- Use **Transaction Status** to track the lifecycle of multichain operations
 
