@@ -12,7 +12,10 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": ["introduction", "getting-started"]
+            "pages": [
+              "introduction",
+              "getting-started"
+            ]
           }
         ]
       },
@@ -21,37 +24,64 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": ["api-reference/introduction", "api-reference/get-api-keys"]
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/get-api-keys"
+            ]
           },
           {
             "group": "Wallets",
             "openapi": "/api-reference/openapi.yaml",
-            "pages": ["POST /wallet/smart-account", "POST /wallets/link/init", "POST /wallets/link/verify", "GET /wallets/link"]
-          },
-          {
-            "group": "Swaps",
-            "openapi": "/api-reference/openapi.yaml",
-            "pages": ["POST /swap/quote", "POST /swap/request-otp", "POST /swap/prepare", "POST /swap/execute"]
-          },
-          {
-            "group": "Transfers",
-            "openapi": "/api-reference/openapi.yaml",
-            "pages": ["POST /transfers", "GET /transfers/{transferId}"]
-          },
-          {
-            "group": "Swap and Transfer",
-            "openapi": "/api-reference/openapi.yaml",
-            "pages": ["POST /swap-and-transfer", "GET /swap-and-transfer/{operationId}"]
+            "pages": [
+              "POST /wallet/smart-account",
+              "POST /wallets/link/init",
+              "POST /wallets/link/verify",
+              "GET /wallets/link"
+            ]
           },
           {
             "group": "Balances",
             "openapi": "/api-reference/openapi.yaml",
-            "pages": ["GET /wallets/{walletId}/balance/unified", "GET /balances/unified"]
+            "pages": [
+              "GET /wallets/{walletId}/balance/unified",
+              "GET /balances/unified"
+            ]
+          },
+          {
+            "group": "Swaps",
+            "openapi": "/api-reference/openapi.yaml",
+            "pages": [
+              "POST /swap/quote",
+              "POST /swap/request-otp",
+              "POST /swap/prepare",
+              "POST /swap/execute"
+            ]
+          },
+          {
+            "group": "Transfers",
+            "openapi": "/api-reference/openapi.yaml",
+            "pages": [
+              "POST /transfers",
+              "GET /transfers/{transferId}"
+            ]
+          },
+          {
+            "group": "Swap and Transfer",
+            "openapi": "/api-reference/openapi.yaml",
+            "pages": [
+              "POST /swap-and-transfer",
+              "GET /swap-and-transfer/{operationId}"
+            ]
           },
           {
             "group": "Privacy",
             "openapi": "/api-reference/openapi.yaml",
-            "pages": ["GET /privacy/balances", "POST /privacy/swap/quote", "POST /privacy/swap/prepare", "POST /privacy/transfer"]
+            "pages": [
+              "GET /privacy/balances",
+              "POST /privacy/swap/quote",
+              "POST /privacy/swap/prepare",
+              "POST /privacy/transfer"
+            ]
           }
         ]
       }
